@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <script>
+    function validateForm() {
+      uname = document.getElementById('uname').value;
+      pswd = document.getElementById('pwd').value;
+      if (uname == '' | pswd == '') {
+        console.log('empty');
+      }
+    }
+  </script>
+  <style>
+         .input-group-addon{color:#ff0000; background-color: #ffffff;}
+  </style>
+</head>
+
+<body>
+ <div class="row">
+    <div class="col-sm-6" style="display: inline-flex;">
+      <a class="navbar-brand"  [routerLink]="['']">
+        <img src="assets/Ministry_of_Peace.png"  id="logo"class="rounded-circle" width="60" height="45" alt="" /> &nbsp; &nbsp;
+  
+        <span style="color: black;">ፍትህ ሚኒስቴር </span>
+      </a>
+    </div>
+ </div>
+  <h1></h1>
+  <h1></h1>
+   <div class="card" style="width:600px ; margin: auto; margin-top: 50px;">
+    <div class="card-body" >
+      <form #userlogin="ngForm" (ngSubmit)="login()">
+        <div class="form-group">
+  
+          <label for="uname">ኢሜይል:</label> <br>
+          <input  [(ngModel)]="loginInfo.username" type="email"  class="form-control" id="uname" placeholder="ኢሜይል አስገባ"
+            name="uname" required style="height: 60px ; ">
+          <p id="usernameMess"></p>
+         
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+  
+  
+  
+          <label for="pwd">የይለፍ ቃል:</label>
+          <input style="height: 60px;" [(ngModel)]="loginInfo.password" type="password" class="form-control" id="pwd"
+            placeholder="የይለፍ ቃል አስገባ" name="pswd" required>
+          <p id="passwordMess"></p>
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group form-check">
+          <label class="form-check-label">
+            
+            <input class="form-check-input" type="checkbox" name="remember" required>እስማማለሁ .
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Check this checkbox to continue.</div>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="border-radius: 25px; height: 55px;">ይግቡ</button>
+        <!-- <button style="border-radius: 25px;" type="submit" class="btn btn-primary btn-block">Button 1</button> -->
+      </form>
+    </div>
+  </div>
+
+
+  
+</body>
+
+</html>

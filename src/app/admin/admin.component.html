@@ -1,0 +1,325 @@
+<app-nav></app-nav>
+<script>
+  function validateForm() {
+  var x = document.getElementById('usernameUser').value;
+  if (x == "" || x == null) {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+</script>
+<div class="container mt-3">
+  <h2>መነሻ </h2>
+  <br>
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#home">መነሻ ገፅ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#menu1">የተጠቃሚዎች አሰተያየት</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#menu2">የተጠቃሚዎች ዝርዝር</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#menu3">የIT ቴክኒሻን ዝርዝር</a>
+    </li>
+
+  </ul>
+
+
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active"><br>
+      <h1>Reported Problem List</h1>
+
+      <!-- <p>{{ getComm|async|json}}</p> -->
+      <!-- <p>{{ getSolutionFOrPrblem|async|json}}</p> -->
+      <table class="table table-striped">
+        <thead class="table-dark" style="background-color: black;color: white; margin: 20px;">
+          <tr>
+            <th>Number</th>
+            <th>ሙሉ ስም</th>
+            <th>የዕቃው ዓይነት</th>
+            <th>የሲስተም ዓይነትe</th>
+            <th>ሪፖርት የተደረገ ችግር</th>
+            <th>See History</th>
+           
+            <th>
+             is  Assigned?
+            </th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let user of getRepo | async  ">
+            <td>{{user.id}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.itemType}}</td>
+            <td>{{user.systemType}}</td>
+            <td>{{user.reportedProblem}}</td>
+            <!-- <td>
+                   {{fetchDataService.getSolutionForProblem(user.reportId)}}
+              </td> -->
+            <td>
+
+              <a  routerLink='/detail/report' [state]="{dateS: user.dateS ,disability: user.disability  ,sex: user.sex ,bureaueNo: user.bureaueNo ,medibName: user.medibName  ,mesik: user.mesik ,UserId: user.UserId, reportId:user.id}" type="button" class="btn btn-outline-dark">See History</a>
+          
+
+            </td>
+           
+           <td>
+             {{user.username}}
+           </td>
+           
+<!-- <td>
+  <form  #assignItTech = "ngForm" (ngSubmit)="assignITTech()">
+               
+    <input [(ngModel)]="assignAdd.username" [ngModelOptions]="{standalone: true}" class="form-control" list="browsers" name="browser" id="browser">
+     
+      <datalist id="browsers"    >
+        <div *ngFor="for let tech of getUsers | async">
+          <option *ngIf="tech.role === 'tech'"    value="{{tech.username}}">
+        </div>
+        
+      </datalist>   
+   
+           
+      <button type="submit" class="btn btn-primary btn-lg ">Assign</button> <br> <br>
+   </form>
+</td> -->
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div id="menu1" class="container tab-pane fade"><br>
+      <h1 id="mmm">Comments</h1>
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>No.</th>
+            <th>FirstName</th>
+            <th>Lastname</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="for let comment of getComm | async ">
+            <td>{{comment.commentId}}</td>
+            <td>{{comment.firstName}}</td>
+            <td>{{comment.lastName}}</td>
+            <td>{{comment.subject}}</td>
+            <td>{{comment.message}}</td>
+            <td>
+              <button class="btn btn-outline-danger" (click)="deleteComment()"  >
+                    Delete
+              </button>
+            </td>
+           
+
+          </tr>
+
+        </tbody>
+      </table> <br> <br>
+
+    </div>
+    <div id="menu2" class="container tab-pane fade"><br>
+      <div class="row">
+        <div class="col-sm-10">
+          <h1>የተጠቃሚዎች ዝርዝር</h1>
+        </div>
+        <div class="col-sm-2">
+          <button style="border-radius: 20px;" type="button" class="btn btn-outline-dark"  data-bs-toggle="modal"
+            data-bs-target="#UserAddModel">
+            Add User
+          </button>
+          <div class="modal" id="UserAddModel">
+            <div class="modal-dialog ">
+              <!-- modal-fullscreen-xxl-down -->
+              <div class="modal-content">
+
+
+                <div class="modal-header">
+                  <h4 class="modal-title">የመሳሪያዎች ጥገና እና ሌሎች አገልግሎት መስጫ ፎርም</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+
+                <div class="modal-body">
+                  <div class="container mt-3">
+                    <h2>
+                      የተጠቃሚ መረጃ</h2>
+                    <form #addUser ='ngForm' (ngSubmit)="onSubmitUserInfo()" onsubmit="close()" aria-required="true" onsubmit="validateForm()" [noValidate]="true" >
+                      <div class="mb-3 mt-3">
+                        <label for="firstName">First Name:</label>
+                        <input  required   [(ngModel)] = 'userinfo.firstName' type="email" class="form-control" id="firstName" placeholder="Enter first Name" name="firstName">
+                        <span class="invalid-feedback"></span>
+                      </div>
+                      <div class="mb-3">
+                        <label for="lastName">Last Name:</label>
+                        <input  [(ngModel)] = 'userinfo.lastName' type="email" class="form-control" id="lastName" placeholder="Enter last Name" name="lastName">
+                        <span class="invalid-feedback"></span>
+                      </div>
+                      <div class="mb-3">
+                        <label for="usernameUser">Username:</label>
+                        <input  [(ngModel)] = 'userinfo.username' type="email" class="form-control" id="usernameUser" placeholder="Enter username" name="usernameUser">
+                        <span class="invalid-feedback"></span>
+                      </div>
+                      <div class="mb-3">
+                        <label for="lastName">Password:</label>
+                        <input  [(ngModel)] = 'userinfo.password' type="password" class="form-control" id="lastName" placeholder="Enter password" name="password">
+                        <span class="invalid-feedback"></span>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary btn-lg ">Add User</button> <br> <br>
+                    </form>
+                  </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+       
+
+      </div>  
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+
+            <th>No.</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+             <th>
+               Delete
+             </th>
+
+
+          </tr>
+        </thead>
+        <tbody *ngFor="for let user of getUsers | async; ">
+          <tr *ngIf="user.role === 'user'">
+
+
+            <td>{{user.UserId}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>
+              <button class="btn btn-outline-danger"  (click)="deleteUser()">
+                Delete
+          </button>
+            </td>
+
+
+          </tr>
+
+        </tbody>
+      </table> <br> <br>
+
+    </div>
+    <div id="menu3" class="container tab-pane fade"><br>
+      <div class="row">
+        <div class="col-sm-9">
+          <h1>የIT ቴክኒሻን ዝርዝር</h1>
+        </div>
+        <div class="col-sm-3">
+
+          <button style="border-radius: 20px;" type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+            data-bs-target="#TechAddModel">
+            Add IT Techinician
+          </button>
+          <div class="modal" id="TechAddModel">
+            <div class="modal-dialog ">
+              <!-- modal-fullscreen-xxl-down -->
+              <div class="modal-content">
+
+
+                <div class="modal-header">
+                  <h4 class="modal-title">የመሳሪያዎች ጥገና እና ሌሎች አገልግሎት መስጫ ፎርም</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+
+                <div class="modal-body">
+
+                  <div class="container mt-3">
+                    <h2>
+                      የተጠቃሚ መረጃ</h2>
+                    <form #addUser ='ngForm' (ngSubmit)="onSubmitTechInfo()" onsubmit="close()">
+                      <div class="mb-3 mt-3">
+                        <label for="firstName">First Name:</label>
+                        <input [(ngModel)] = 'techInfo.firstName' type="text" class="form-control" id="firstName" placeholder="Enter first Name" name="firstName">
+                      </div>
+                      <div class="mb-3">
+                        <label for="lastName">Last Name:</label>
+                        <input [(ngModel)] = 'techInfo.lastName' type="text" class="form-control" id="lastName" placeholder="Enter last Name" name="lastName">
+                      </div>
+                      <div class="mb-3">
+                        <label for="username">Username:</label>
+                        <input [(ngModel)] = 'techInfo.username' type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+                      </div>
+                      <div class="mb-3">
+                        <label for="lastName">Password:</label>
+                        <input [(ngModel)] = 'techInfo.password' type="password" class="form-control" id="lastName" placeholder="Enter password" name="password">
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary btn-lg "> Add IT Techinician</button> <br> <br>
+                    </form>
+                  </div>
+                </div>
+
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+
+            <th>No.</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Delete</th>
+
+
+          </tr>
+        </thead>
+        <tbody *ngFor="for let user of getUsers | async">
+          <tr *ngIf="user.role === 'tech'">
+
+
+            <td>{{user.UserId}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>
+              <button class="btn btn-outline-danger" (click)="deleteUser()" >
+                Delete
+          </button>
+            </td>
+
+
+          </tr>
+
+        </tbody>
+      </table> <br> <br>
+
+
+    </div>
+
+  </div>
+</div>

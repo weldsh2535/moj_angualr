@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-12">
+        <a class="navbar-brand"  [routerLink]="['']">
+            <img src="assets/Ministry_of_Peace.png"  id="logo"class="rounded-circle" width="60" height="45" alt="" /> &nbsp; &nbsp;
+      
+            <span style="color: black;">ፍትህ ሚኒስቴር </span>
+          </a>
+    </div>
+</div>
+<div style="margin: 30px;">
+    <div class="card" style="margin: auto;  width: 50%;">
+
+        <div class="container">
+            <form #usercomment = "ngForm" (ngSubmit)="onSubmit()" style=" margin: auto; padding-top: 20px;">
+                <div class="form-group ">
+                     <label for="fname"><strong>ስም</strong> </label> <br>
+                     <input style="height: 50px;" [(ngModel)]="commentModel.firstName" type="text" class="form-control" placeholder="ስም አስገባ" name="fname"> <br>
+                     <label for="lname"><strong>የአባት ስም:</strong> </label> <br>
+                     <input style="height: 50px;" [(ngModel)]="commentModel.lastName" type="text" class="form-control" name="lname" placeholder="የአባት ስም አስገባ"> <br>
+                     <label for="subject"><strong>ርዕሰ ጉዳይ</strong></label> <br>
+                     <input placeholder="ርዕሰ ጉዳይ" style="height: 50px;" [(ngModel)]="commentModel.subject" type="text" id="subject" name="subject" class="form-control">  <br>
+                     <label for="message"><strong>መልእክት</strong></label> <br>
+                     <textarea [(ngModel)]="commentModel.message" name="message" id="message" cols="10" rows="10" class="form-control" placeholder="መልእክት"></textarea> <br>
+                     <!-- <input type="submit" value="Submit" name="Submit" class="btn btn-primary"> -->
+                     <button type="submit" class="btn btn-primary btn-lg ">Submit</button> <br> <br>
+                </div>
+            </form>
+        </div> <br> <br>
+        </div>
+</div>

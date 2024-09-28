@@ -1,0 +1,32 @@
+<app-nav></app-nav>
+<h1>Reported Problem List</h1>
+
+<table class="table">
+    <thead class="table-dark" style="background-color: black;color: white; margin: 20px;">
+        <tr>
+          <th new>Number</th>
+          <th>Full Name</th>
+          <th>Item Type</th>
+          <th>System Type</th>
+          <th>ReportedProblem</th>
+          <th>Fix</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor=" let user of getRepoForTech | async ">
+              <td>{{user.UserId}}</td>
+              <td>{{user.fullName}}</td>
+              <td>{{user.itemType}}</td>
+              <td>{{user.systemType}}</td>
+              <td>{{user.reportedProblem}}</td>
+              <td>
+                <a routerLink='/moj/tech/solution' [state]="{ UserId: user.UserId, reportId:user.id, systemType: user.systemType,itemType: user.itemType, reportedProblem: user.reportedProblem, fullName: user.fullName}" type="button" class="btn btn-outline-dark">Solution</a>
+                 
+              </td>
+              
+            
+
+          </tr>
+      </tbody>
+</table>

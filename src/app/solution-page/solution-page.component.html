@@ -1,0 +1,292 @@
+<div class="row" style="margin: 15px; ">
+  <div class="col-sm-10">
+    <button  [routerLink]="['moj/tch/tech']" class="btn "><i class="bi bi-chevron-compact-left"></i>  Back</button>
+  </div>
+  <div class="col-sm-2">
+    <button  class="btn " onclick="window.print()">Print </button>
+  </div>
+</div>
+<div class="card" style=" margin-left: 20px; margin-top: 20px; margin-right: 20px; background-color: rgb(250, 248, 244);">
+<h1 style="margin: auto; margin-top: 5px;">Report</h1>
+<div class="card-body" > 
+  <div class="row" style="margin: auto;">
+    <div class="col-sm-4">
+      <strong> መስክ:- </strong>   {{reportDetail.mesik}} <br> <br> <br> <br>
+      <strong>የዳይሬክቶሬቱ / የሥራ ሂደቱ ስም:- </strong>  {{reportDetail.direcrotName}} <br> <br> <br> <br>
+      <strong>ሪፖርት የተደረገ ችግር: </strong>  {{reportDetail.reportedProblem}}
+
+
+    </div>
+    <div class="col-sm-4">
+        <strong>የምድብ ጽ/ቤት ስም:</strong> : {{reportDetail.medibName}} <br> <br> <br> <br>
+        <strong>ሰዓት:</strong> {{reportDetail.startDate}} <br> <br> <br> <br>
+        <strong>የዕቃው ዓይነት:- {{reportDetail.itemType}} </strong>
+
+        
+    </div>
+    <div class="col-sm-4">
+     <strong>የተጠቃሚዉ ስም: </strong> {{reportDetail.fullName}} <br> <br> <br> <br>
+     <strong>የሲስተም ዓይነት:- </strong> {{reportDetail.systemType}}
+    </div>
+  </div>
+ 
+</div> 
+</div>
+
+
+<!-- <div class="message" *ngIf="formSubmit; else #theForm">Message here</div> -->
+<!-- <div *ngIf="fetchDataService.getSolutionForProblem.toString() != null";>
+
+ </div> -->
+<!-- <p>{{getSollYa | async | json}}</p> 
+  <p>the value is {{getSollYa.solutionId}}</p>
+  <div *ngFor="for let g of getSollYa | async">
+         the se is        <p>{{g.solutionId}}</p>
+
+    
+  </div> -->
+
+  <!-- <div class="card" style=" margin-left: 20px; margin-top: 20px; margin-right: 20px;">
+    <h1 style="margin: auto; margin-top: 5px;">Solution</h1>
+    <div class="card-body" >
+      <div class="row" style="margin: auto;" *ngFor="for let yy of getSollYa | async">
+        <div class="col-sm-4">
+          <strong> Solution Id:</strong>   {{yy.solutionId}} <br> <br>
+         
+        </div>
+        <div class="col-sm-4">
+            <strong>happenedProblem:</strong> : {{yy.happenedProblem}} <br> <br>
+          
+            
+        </div>
+        <div class="col-sm-4">
+         <strong>Brand: </strong> {{yy.brand}}
+        </div>
+      </div>
+     
+    </div> 
+    </div> <br> <br>  -->
+    <!-- <h1>11111111111111111</h1> -->
+    <div *ngIf="(getAllSolution | async) as solution">
+        <div *ngIf="solution.solutionId; secondOne">
+                <h1>Soluton send to user</h1>
+        </div>
+    </div>
+    <ng-template #secondOne>
+          <h1>Not SUbmitted yet</h1>
+    </ng-template>
+   <!-- <h1>111111111111111111111</h1> -->
+    <div class="card" style=" margin-left: 20px; margin-top: 20px; margin-right: 20px;  background-color: rgb(250, 248, 244);">
+      <h1 style="margin: auto; margin-top: 5px;">Solution</h1>
+      <div class="card-body" >
+        <div class="row" style="margin: auto;" *ngIf="(getAllSolution | async) as solution">
+          <div class="col-sm-4"  >
+            <strong> report Id:</strong>  {{solution.reportId}}  <br> <br> <br> <br>
+            <strong>ያጋጠመ ችግር:- </strong> {{solution.happenedProblem}}  <br> <br> <br> <br>
+            <strong>መፍትሄ:- </strong>   {{solution.sole}}  <br> <br> <br> <br>
+            <strong>ብልሽት የገጠመው ዕቃ ተጠግኗል?:- </strong> {{solution.isProblemFixed}}
+            
+          </div>
+          <div class="col-sm-4">
+            <strong>Solution Id:- </strong>  {{solution.solutionId}} <br> <br> <br> <br>
+            <strong>የተጀመረበት ሰዓት:- </strong> {{solution.startDate}}   <br> <br> <br> <br>
+            <strong>የተጠናቀቀበት ሰዓት:- </strong> {{solution.endDate}} <br> <br> <br> <br>
+            <strong>ያጋጠው ችግር በከፈል ወይም ያልተጠገነበት ምክንያት:- </strong> {{solution.reasonProblemNotFixed}}
+              
+              
+          </div>
+          <div class="col-sm-4">
+           <strong>Brand: </strong> {{solution.brand}} <br> <br> <br> <br>
+           <strong>Model:  </strong>  {{solution.model}}   <br> <br> <br> <br>
+           
+           
+          </div>
+        </div>
+       
+      </div> 
+    </div> <br> <br> <br> <br> 
+ 
+
+<div class="card" style="margin: 20px;">
+  <div style="background-color: white; padding-left: 20px; padding-top: 20px; padding-right: 20px;">
+    <!-- *ngFor="for let g of getSollYa | async" -->
+    <div >
+     
+      <!-- <h1>the value of id is that {{g.solutionId.toString()}}</h1> -->
+      <ng-container *ngIf="getSollYa.solutionId === undefined; else elseBlock">
+       
+          <form #usersolution="ngForm" (ngSubmit)="onSolutionSubmit()">
+            <div class="row">
+                <div class="col-sm-6">
+                  <input    [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.brand" 
+                  type="text" class="form-control" id="brand" name="brand" placeholder="brand"> 
+                </div>
+                <div class="col-sm-6">
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.model" 
+                  type="text" class="form-control" placeholder="model" id="model" name="model">
+                </div>
+            </div>  <br>
+            <div class="row">
+               <div class="col-sm-12">
+                <label for="">ያጋጠመ ችግር:- </label>  <br>
+                <input style="height: 90px;" [(ngModel)]="solutionModel.happenedProblem" class="form-control" placeholder="ያጋጠመ ችግር" id="happenedProblem" name="happenedProblem" type="text"
+                >
+               </div>
+              
+
+            </div> <br>
+            <div class="row">
+             
+                <div class="col-sm-12">
+                  <label for="">መፍትሄ:- </label> <br>
+                  <input style="height: 90px;" [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.sole" id="sole" name="sole"
+                  type="text"  class="form-control" placeholder="መፍትሄ">
+                 </div>
+              
+            </div> <br> 
+             <div class="row">
+                <div class="col-sm-6">
+                  <label for="startDate">የተጀመረበት ሰዓት:-</label>  <br>
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.startDate" 
+                  type="date" name="startDate" id="startDate" class="form-control" placeholder="የተጀመረበት ሰዓት">
+                </div>
+                <div class="col-sm-6">
+                  <label for="endDate">የተጠናቀቀበት ሰዓት:-</label>  <br>
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.endDate" 
+                  type="date" name="endDate" id="endDate" class="form-control" placeholder="የተጠናቀቀበት ሰዓት">
+                </div>
+             </div> <br>
+            <div class="row">
+              <div class="col-sm-3">
+                <div>
+                  <p><strong>ብልሽት የገጠመው ዕቃ ተጠግኗል?:-</strong> </p>
+                </div>
+              </div>
+              <div class="col-sm-2" *ngFor="let ispfixed of isProblemFixed let i = index">
+                <label for="{{ispfixed.name}}">{{ispfixed.name}}</label> &nbsp; &nbsp;  &nbsp; &nbsp;
+      
+      
+                <input (change)="onChangeItem($event)" [checked]="ispfixed.isSelected" class="form-check-input"
+                  type="checkbox" name="{{ispfixed.name}} " value="{{ispfixed.name}}">
+              </div>
+      
+      
+      
+            </div> <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="reasonProblemNotFixed">ያጋጠው ችግር በከፈል ወይም ያልተጠገነበት ምክንያት:- </label> <br>
+                <input style="height: 90px;" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.reasonProblemNotFixed" type="text"
+                  >
+              </div>
+      
+            </div> <br>
+            <div class="row">
+              <div class="col-sm-1">
+                <label for="itTechName">itTechName</label> &nbsp; &nbsp;
+              </div>
+               <div class="col-sm-7">
+                 
+                 <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.itTechName" type="text"
+                 >
+               </div>
+            </div> <br> <br>
+
+            
+
+            <!-- <div class="row">
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <label class="form-check-label" for="brand">Brand: </label> &nbsp; &nbsp;  &nbsp; &nbsp;
+                  <input    [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.brand" 
+                    type="text" class="form-control" id="brand" name="brand"> <br> <br> <br>
+      
+                  <label for="">ያጋጠመ ችግር:- </label>  &nbsp; &nbsp;
+                  <input [(ngModel)]="solutionModel.happenedProblem" id="happenedProblem" name="happenedProblem" type="text"
+                    > <br> <br>
+                  &nbsp; &nbsp;
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.sole" id="sole" name="sole"
+                    type="text" >
+      
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <label class="form-check-label" for="model">Model: </label> &nbsp; &nbsp;  &nbsp; &nbsp;
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.model" 
+                    type="text" class="form-check-input" id="model" name="model"> <br>
+      
+      
+                </div>
+              </div>
+            </div> <br> <br>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <label for="startDate">የተጀመረበት ሰዓት:-</label>  &nbsp; &nbsp;
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.startDate" 
+                    type="text" name="startDate" id="startDate">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <label for="endDate">የተጠናቀቀበት ሰዓት:-</label>  &nbsp; &nbsp;
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.endDate" 
+                    type="text" name="endDate" id="endDate">
+                </div>
+              </div>
+      
+      
+            </div> <br> <br>
+            <div class="row">
+              <div class="col-sm-3">
+                <div>
+                  <p><strong>ብልሽት የገጠመው ዕቃ ተጠግኗል:-</strong> </p>
+                </div>
+              </div>
+              <div class="col-sm-2" *ngFor="let ispfixed of isProblemFixed let i = index">
+                <label for="{{ispfixed.name}}">{{ispfixed.name}}</label> &nbsp; &nbsp;  &nbsp; &nbsp;
+      
+      
+                <input (change)="onChangeItem($event)" [checked]="ispfixed.isSelected" class="form-check-input"
+                  type="checkbox" name="{{ispfixed.name}} " value="{{ispfixed.name}}">
+              </div>
+      
+      
+      
+            </div> <br> <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="reasonProblemNotFixed">ያጋጠው ችግር በከፈል ወይም ያልተጠገነበት ምክንያት:- </label> &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.reasonProblemNotFixed" type="text"
+                  >
+              </div>
+      
+            </div> <br> <br>
+             <div class="row">
+               <div class="col-sm-6">
+                 <Label for="itTechName">itTechName: </Label> &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;
+                 <input [ngModelOptions]="{standalone: true}" [(ngModel)]="solutionModel.itTechName" type="text"
+                  >
+               </div>
+             </div>
+      
+            <div>
+            
+            </div> <br> <br> <br> <br> -->
+            <button type="submit" class="btn btn-primary btn-lg ">Submit</button> <br> <br>
+          </form>
+        
+         
+      </ng-container>
+      
+      
+    </div>
+  
+  </div> <br> <br>
+  
+  <ng-template #elseBlock>
+     <h1>Submitted Form</h1>
+  
+  </ng-template>
+</div>

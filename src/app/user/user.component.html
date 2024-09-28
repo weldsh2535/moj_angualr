@@ -1,0 +1,306 @@
+
+<app-nav></app-nav>
+<script>
+  function myFunction(){
+    var checkBox = document.getElementById("6");
+    console.warn('value is ',checkBox.value);
+    var text = document.getElementById("inn");
+    if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+     text.style.display = "none";
+  }
+  }
+</script>
+
+<div class="container mt-3">
+  <h2>መነሻ ገጽ</h2>
+  <br>
+ 
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#home">መነሻ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#menu1"> የመፍትሄው ዝርዝር</a>
+    </li>
+  
+  </ul>
+
+
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active"><br>
+      <div style="margin: 20px; background-color: white; padding: 20px;">
+        <div class="card " style="padding: 20px;">
+          <form #usercomment = "ngForm" (ngSubmit)="onReport()">
+            <div class="row">
+                      <div class="col-sm-2">
+                        <p > <strong>መስክ</strong> </p>
+                      </div>
+                    <div class="col-sm-5">
+                      <label class="form-check-label" for="check1">ዋናዉ መ/ቤት</label> &nbsp; &nbsp;&nbsp; &nbsp;
+                      <input  type="checkbox" class="form-check-input" id="mesikOne" name="mesikOne"  >
+                    </div>
+                    <div class="col-sm-5">
+                      <label class="form-check-label" for="check1">ምድብ ፍትሕ ጽ/ቤት</label> &nbsp; &nbsp; &nbsp; &nbsp;
+                      <input [ngModelOptions]="{standalone: true}" id="mesikTwo" name="mesikTwo" [(ngModel)]="reportModel.mesik" type="checkbox" class="form-check-input" > 
+                    </div>
+            </div> <br>
+            <div class="row form-floating">
+               <div class="col-sm-6">
+                <input type="text" class="form-control"  placeholder="የዳይሬክቶሬቱ / የሥራ ሂደቱ ስም" id="direcrotName" name="direcrotName" [(ngModel)]="reportModel.direcrotName" >
+               </div>
+               <div class="col-sm-6">
+                <input class="form-control" id="medibName" name="medibName" placeholder="የምድብ ጽ/ቤት ስም" [(ngModel)]="reportModel.medibName" type="text" >
+               </div>
+            </div> <br>
+            <div class="row">
+               <div class="col-sm-6">
+                <input placeholder="ቢሮ ቁጥር" class="form-control" [ngModelOptions]="{standalone: true}" id="bureaueNo" name="bureaueNo" [(ngModel)]="reportModel.bureaueNo" type="text" >
+               </div>
+               <div class="col-sm-6">
+                <input class="form-control" placeholder="ሰዓት" [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.dateS" type="date" >
+               </div>
+            </div> <br>
+            <div class="row">
+              <div class="col-sm-6">
+                <input class="form-control" placeholder="የተጠቃሚዉ ስም" [ngModelOptions]="{standalone: true}" id="fullName" name="fullName" [(ngModel)]="reportModel.fullName" type="text" > <br>
+              </div>
+              <div class="col-sm-6">
+                <input class="form-control" placeholder="ጾታ" [ngModelOptions]="{standalone: true}" id="sex" name="sex" [(ngModel)]="reportModel.sex" type="text" > <br>
+              </div>
+            </div> <br>
+            <div class="row" >
+              <div class="col-sm-4">
+                  <p > ተጠቃሚው አካል ጉዳተኛ ናቸው?  </p> 
+              </div>
+            <div class="col-sm-4" *ngFor="let disa of _disability">
+                <div class="form-check">
+                  <label class="form-check-label" for="{{disa.name}}">{{disa.name}}</label> &nbsp; &nbsp; &nbsp; &nbsp;
+                  <input (change)="disabilitySubmission($event)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.disability" type="radio" class="form-check-input" value="{{disa.name}}" id="{{disa.id}}" name="{{disa.name}}"  [checked]="disa.isSelected"> <br>
+                
+                  </div>
+            </div>
+           
+          </div> <br>
+          <div class="row" >
+            <div class="col-sm-2">
+                  <p > <strong>የዕቃው ዓይነት:  </strong> </p>
+              </div>
+            <div class="col-sm-2"  *ngFor="let item of _itemList let i = index"  >
+                  <label for="{{item.name}}">{{item.name}}</label> &nbsp; &nbsp;  &nbsp; &nbsp;
+        
+                  
+                 <input style="border-color: black;" (change)="onChangeItem($event)" [checked]="item.isSelected" class="form-check-input" type="checkbox" name="{{item.name}} " value="{{item.name}}">
+            </div>
+            <div><input type="text" class="form-control" style="display: none;" id="inn"></div>
+            
+          </div> <br>
+          <div class="row" >
+            <div class="col-sm-2">
+                <p > <strong>የሲስተም ዓይነት:  </strong> </p>
+            </div>
+            <div class="col-sm-2"  *ngFor="let system of _systemList let i = index"  >
+              <label for="{{system.name}}">{{system.name}}</label> &nbsp; &nbsp; &nbsp; &nbsp;             
+             <input (change)="onChangeSystem($event)" [checked]="system.isSelected" class="form-check-input" type="checkbox" name="{{system.name}} " value="{{system.name}}">
+        </div>
+        
+        
+        </div> <br>
+        <div class="row" >
+          <div class="col-sm-4">
+              <p > <strong>ሪፖርት የተደረገ ችግር </strong> </p> 
+              
+          </div>
+          <div class="col-sm-8">
+          
+              <textarea class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.reportedProblem" id="reportedProblem" name="reportedProblem" cols="50">
+                  
+              </textarea>
+          </div>
+        
+       
+      </div>  <br> <br>
+
+
+            
+<!--      
+            <div class="row" >
+              <div class="col-sm-2 ">
+                  <p > <strong>መስክ</strong> </p>
+              </div>
+              <div class="col-sm-5">
+                  <div class="form-check">
+                      <label class="form-check-label" for="check1">ዋናዉ መ/ቤት</label> &nbsp; &nbsp;&nbsp; &nbsp;
+                      <input  type="checkbox" class="form-check-input" id="mesikOne" name="mesikOne"  > <br>
+                       <label for="">የዳይሬክቶሬቱ / የሥራ ሂደቱ ስም:- </label>  
+                       <input id="direcrotName" name="direcrotName" [(ngModel)]="reportModel.direcrotName" type="text" > <br> <br>
+                       <label for="">ቢሮ ቁጥር:- </label> &nbsp; &nbsp;&nbsp; &nbsp;
+                       <input [ngModelOptions]="{standalone: true}" id="bureaueNo" name="bureaueNo" [(ngModel)]="reportModel.bureaueNo" type="text" >
+                    </div>
+              </div>
+              <div class="col-sm-5 ">
+        
+                  <div class="form-check">
+                      <label class="form-check-label" for="check1">ምድብ ፍትሕ ጽ/ቤት</label> &nbsp; &nbsp; &nbsp; &nbsp;
+                      <input [ngModelOptions]="{standalone: true}" id="mesikTwo" name="mesikTwo" [(ngModel)]="reportModel.mesik" type="checkbox" class="form-check-input" > <br>
+                      <label for="">የምድብ ጽ/ቤት ስም:- </label> 
+                      <input id="medibName" name="medibName" [(ngModel)]="reportModel.medibName" type="text" > <br> <br>
+                      <label for="">ሰዓት:- </label> &nbsp; &nbsp;&nbsp; &nbsp;
+                      <input [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.dateS" type="text" >
+                    </div>
+              </div>
+            </div>   <br> <br>
+            <div class="row" >
+                <div class="col-sm-2"></div>
+              <div class="col-sm-5">
+                  <div class="form-check">
+                       <label for="">የተጠቃሚዉ ስም:- </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                       <input [ngModelOptions]="{standalone: true}" id="fullName" name="fullName" [(ngModel)]="reportModel.fullName" type="text" > <br>
+                  
+                    </div>
+              </div>
+              <div class="col-sm-5 ">
+        
+                  <div class="form-check">
+                      <label for="">ጾታ:- </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                      <input [ngModelOptions]="{standalone: true}" id="sex" name="sex" [(ngModel)]="reportModel.sex" type="text" > <br>
+                    </div>
+              </div>
+            </div> <br>
+            <div class="row" >
+              <div class="col-sm-2">
+                  <p > <strong>ተጠቃሚው አካል ጉዳተኛ ናቸው? </strong> </p> 
+              </div>
+            <div class="col-sm-5" *ngFor="let disa of _disability">
+                <div class="form-check">
+                  <label class="form-check-label" for="{{disa.name}}">{{disa.name}}</label> &nbsp; &nbsp; &nbsp; &nbsp;
+                  <input (change)="disabilitySubmission($event)"  [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.disability" type="radio" class="form-check-input" value="{{disa.name}}" id="{{disa.id}}" name="{{disa.name}}"  [checked]="disa.isSelected"> <br>
+                
+                  </div>
+            </div>
+           
+          </div> <br> <br>
+          <div class="row" >
+            <div class="col-sm-2">
+                  <p > <strong>የዕቃው ዓይነት:  </strong> </p>
+              </div>
+            <div class="col-sm-2"  *ngFor="let item of _itemList let i = index"  >
+                  <label for="{{item.name}}">{{item.name}}</label> &nbsp; &nbsp;  &nbsp; &nbsp;
+        
+                  
+                 <input style="border-color: black;" (change)="onChangeItem($event)" [checked]="item.isSelected" class="form-check-input" type="checkbox" name="{{item.name}} " value="{{item.name}}">
+            </div>
+            
+          </div>
+         
+           <br> <br>
+          <div class="row" >
+              <div class="col-sm-2">
+                  <p > <strong>የሲስተም ዓይነት:  </strong> </p>
+              </div>
+              <div class="col-sm-2"  *ngFor="let system of _systemList let i = index"  >
+                <label for="{{system.name}}">{{system.name}}</label> &nbsp; &nbsp; &nbsp; &nbsp;             
+               <input (change)="onChangeSystem($event)" [checked]="system.isSelected" class="form-check-input" type="checkbox" name="{{system.name}} " value="{{system.name}}">
+          </div>
+          
+          
+          </div> <br> <br>
+        
+          <div class="row" >
+              <div class="col-sm-4">
+                  <p > <strong>ሪፖርት የተደረገ ችግር </strong> </p> 
+                  
+              </div>
+              <div class="col-sm-8">
+                  <textarea [ngModelOptions]="{standalone: true}" [(ngModel)]="reportModel.reportedProblem" id="reportedProblem" name="reportedProblem" cols="50">
+                      
+                  </textarea>
+              </div>
+            
+           
+          </div> <br> <br> -->
+          <button type="submit" class="btn btn-primary btn-lg ">Submit</button> <br> <br>
+           </form>
+        </div>
+     </div>
+    </div>
+    <div id="menu1" class="container tab-pane fade"><br>
+      <h1>solutions</h1>
+      <table class="table">
+        <thead class="table-dark" style="background-color: black;color: white; margin: 20px;">
+            <tr>
+             
+              <th>ያጋጠመ ችግር</th>
+              <th>መፍትሄ</th>
+              <th>የተጀመረበት ሰዓት</th>
+              <th>የተጠናቀቀበት ሰዓት</th>
+              <th>ብልሽት የገጠመው ዕቃ ተጠግኗል</th>
+              <th>ያጋጠው ችግር በከፈል  ወይም ያልተጠገነበት ምክንያት</th>
+              <td>Rate Us</td>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor=" let user of getSolution | async ">
+                 
+                  <td>{{user.happenedProblem}}</td>
+                  <td>{{user.sole}}</td>
+                  <td>{{user.startDate}}</td>
+                  <td>{{user.endDate}}</td>
+                  <td>{{user.isProblemFixed}}</td>
+                  <td>{{user.reasonProblemNotFixed}}</td>
+                 
+                   <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                      rate us
+                  </button>
+                 
+                  <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                  
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">የመሳሪያዎች ጥገና እና ሌሎች አገልግሎት መስጫ ፎርም</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                  
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <h1>እርካታዎ</h1>
+                          <div>
+                         
+                             <form #userrating="ngForm" (ngSubmit)="onRating()">
+                              <div class="row" *ngFor="let rating of _rating let i = index">
+                                <div class="col-sm-4">
+                                  <label for="{{rating.name}}">{{rating.name}} </label> &nbsp; &nbsp; &nbsp; &nbsp; 
+                                  <input (change)="onUserRating($event)" [checked]="rating.isSelected" class="form-check-input" type="checkbox" name="{{rating.name}} " value="{{rating.name}}">
+                                </div>
+                                
+                              </div> <br>
+                              <button type="submit" class="btn btn-primary  ">Submit</button> <br> <br>
+                             </form>
+                          </div>   
+                        </div>
+                  
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                  
+                      </div>
+                    </div>
+                  </div>
+                   </td>
+    
+              </tr>
+          </tbody>
+    </table>
+    </div>
+   
+  </div>
+</div>
+
+ <br> <br>
+
+<!-- <p> {{ getSolution | async |json}} </p> -->
